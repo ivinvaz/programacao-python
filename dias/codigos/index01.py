@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 usuarios = 0
-# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+# ---------------------------- gerar senha ------------------------------- #
 
 def gerar_senha():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -24,7 +24,7 @@ def gerar_senha():
 
     return entrada_senha.insert(0,password)
 
-# ---------------------------- SAVE PASSWORD ------------------------------- #
+# ---------------------------- salvar senha ------------------------------- #
 
 def salvar():
     global usuarios
@@ -48,7 +48,7 @@ def salvar():
         else:
             pass
 
-# ---------------------------- UI SETUP ------------------------------- #
+# ---------------------------- configuração de interface ------------------------------- #
 
 window = Tk()
 window.config(padx=50,pady=50)
