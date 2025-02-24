@@ -39,7 +39,7 @@ def salvar():
         s_n = messagebox.askokcancel(title="Website", message=f"As informações estão corretas: \nEmail:{usuario_user}\nSenha:{usuario_senha}\nSalvar?")
 
         if s_n:
-            with open("programacao-python\dias\itens_gerais\data_index01.txt","a") as data:
+            with open("programacao-python\Codigos\index01\data_index01.txt","a") as data:
                 data.write(f"Usuario {usuarios}: {usuario_website} | {usuario_user} | {usuario_senha}\n")
             entrada_website.delete(0,50)
             entrada_user.delete(0,50)
@@ -53,7 +53,7 @@ def salvar():
 window = Tk()
 window.config(padx=50,pady=50)
 
-imagem = PhotoImage(file="programacao-python\dias\itens_gerais\logo.png")
+imagem = PhotoImage(file="programacao-python\Codigos\index01\logo.png")
 
 canva = Canvas(width=200,height=200)
 canva.create_image(100,100,image=imagem)
