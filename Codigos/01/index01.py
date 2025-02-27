@@ -1,7 +1,25 @@
 from tkinter import *
 from tkinter import messagebox
 import random
+import json
+
 usuarios = 0
+# ---------------------------- Função Search --------------------------- #
+
+def search():
+    usuario_website = entrada_website.get()
+    try:
+        with open("programacao-python/Codigos/01/data_index01.json") as data:
+            dic_data = json.load(data)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error",message="Arquivo não encontrado.")
+    else:
+            if usuario_website in dic_data:
+                email = dic_data[usuario_website]["email"]
+                senha = dic_data[usuario_website]["password"]
+                messagebox.showinfo(title=usuario_website,message=f"Email: {email}\nSenha: {senha }")
+        
+    
 # ---------------------------- gerar senha ------------------------------- #
 
 def gerar_senha():
@@ -32,34 +50,42 @@ def salvar():
     usuario_website = entrada_website.get()
     usuario_user = entrada_user.get()
     usuario_senha = entrada_senha.get()
+    new_data = {usuario_website:{
+        "email": usuario_user,
+        "password": usuario_senha,
+    }}
 
     if usuario_senha == "" or usuario_user == "" or usuario_website == "":
         messagebox.showerror(title="Erro",message="As informações não podem estar vazias")
     else:
-        s_n = messagebox.askokcancel(title="Website", message=f"As informações estão corretas: \nEmail:{usuario_user}\nSenha:{usuario_senha}\nSalvar?")
-
-        if s_n:
-            with open("programacao-python\Codigos\index01\data_index01.txt","a") as data:
-                data.write(f"Usuario {usuarios}: {usuario_website} | {usuario_user} | {usuario_senha}\n")
-            entrada_website.delete(0,50)
-            entrada_user.delete(0,50)
-            entrada_user.insert(0, "@gmail.com")
-            entrada_senha.delete(0,50)
+        try:
+            with open("programacao-python/Codigos/01/data_index01.json","r") as data:
+                data_file = json.load(data)
+        except FileNotFoundError:
+            with open("programacao-python/Codigos/01/data_index01.json","w") as data:
+                json.dump(new_data,data,indent=4)
         else:
-            pass
+            data_file.update(new_data)
+            with open("programacao-python/Codigos/01/data_index01.json","w") as data:
+                json.dump(data_file,data,indent=4)
+        finally:
+                entrada_website.delete(0,END)
+                entrada_user.delete(0,END)
+                entrada_user.insert(0, "@gmail.com")
+                entrada_senha.delete(0,END)
 
 # ---------------------------- configuração de interface ------------------------------- #
 
 window = Tk()
 window.config(padx=50,pady=50)
 
-imagem = PhotoImage(file="programacao-python\Codigos\index01\logo.png")
+imagem = PhotoImage(file="programacao-python/Codigos/01/logo.png")
 
 canva = Canvas(width=200,height=200)
 canva.create_image(100,100,image=imagem)
 canva.grid(row=0,column=1)
 
-label1 = Label(text="Webstite:")
+label1 = Label(text="Website:")
 label1.config(font=("Arial",14))
 label1.grid(row=1,column=0)
 
@@ -71,9 +97,9 @@ label3 = Label(text="Password:")
 label3.config(font=("Arial",14))
 label3.grid(row=3,column=0)
 
-entrada_website = Entry(width=52)
+entrada_website = Entry(width=32)
 entrada_website.focus()
-entrada_website.grid(column=1,row=1,columnspan=2)
+entrada_website.grid(column=1,row=1,columnspan=1)
 
 entrada_user = Entry(width=52)
 entrada_user.insert(0, "@gmail.com")
@@ -89,5 +115,7 @@ botao_senha.grid(column=2,row=3)
 botao_add = Button(text="Add", width=36, command=salvar)
 botao_add.grid(column=1,row=4,columnspan=2, pady=20)
 
+botao_search = Button(text="Search", width=15, command=search)
+botao_search.grid(column=2,row=1,columnspan=1, pady=20)
 
 window.mainloop()
